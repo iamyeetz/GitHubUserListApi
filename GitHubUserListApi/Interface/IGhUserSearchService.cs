@@ -8,6 +8,6 @@ namespace GitHubUserListApi
 {
     public interface IGhUserSearchService
     {
-         Task<UserInformation> GetUserFromGithubAsync(Users name);
+         Task<UserInfoRequestResponse> GetUserFromGithubAsync(List<Users> name);
     }
 }

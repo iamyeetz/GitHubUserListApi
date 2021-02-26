@@ -20,42 +20,62 @@ namespace GitHubUserListApi.Services
         {
             _cache = cache;
         }
-        public async Task<UserInformation> GetUserFromGithubAsync(Users name)
+        public async Task<UserInfoRequestResponse> GetUserFromGithubAsync(List<Users> users)
         {
             UserInformation userToReturn = new UserInformation();
-            var username = name.username;
-            try
+            UserInfoRequestResponse userInfoRequestResponse = new UserInfoRequestResponse();
+
+
+            foreach (var user in users)
             {
-                userToReturn = await _cache.GetUserFromCache(username);
-                if(userToReturn != null)
-                { 
-                    return userToReturn;
+                 var username = user.username;
+                try
+                {
+                    userToReturn = await _cache.GetUserFromCache(username);
+                    if (userToReturn != null)
+                    {
+                        if (userToReturn.id != null)
+                        {
+                            userInfoRequestResponse.UserInformation.Add(userToReturn);
+                        }
+                        else
+                        {
+                            userInfoRequestResponse.userDoesntExists.Add(user);
+                        }
+                    }
+                    else
+                    {
+                        userToReturn = await ConsumeGitHubApi(username);
+                        await _cache.CacheItem(username, userToReturn);
+                        if (userToReturn.id != null)
+                        {
+                            userInfoRequestResponse.UserInformation.Add(userToReturn);
+                        }
+                        else
+                        {
+                            userInfoRequestResponse.userDoesntExists.Add(user);
+                        }
+                
+                    }
+
                 }
-              
+                catch (Exception ex)
+                {
+                        userToReturn = await ConsumeGitHubApi(username);
+                        await _cache.CacheItem(username, userToReturn);
+                        if (userToReturn.id != null)
+                        {
+                            userInfoRequestResponse.UserInformation.Add(userToReturn);
+                        }
+                        else
+                        {
+                            userInfoRequestResponse.userDoesntExists.Add(user);
+                        }
+                }
+
+    
             }
-            catch (Exception ex)
-            {
-                //log error            
-            }
-   
-            userToReturn = await ConsumeGitHubApi(username);
-            await _cache.CacheItem(username, userToReturn);
-             return userToReturn;
-
-            //if (!_cache.TryGetValue(String.Concat("User", name.username), out userToReturn))
-            //{
-            //    if (userToReturn == null)
-            //    {
-            //        userToReturn =  await ConsumeGitHubApi(name.username);
-
-            //    }            
-            //    var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(2));
-            //    _cache.Set(String.Concat("User", name.username), userToReturn, cacheEntryOptions);
-
-
-            //}
-
-
+            return userInfoRequestResponse;
         }
 
 

@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitHubUserListApi", "GitHubUserListApi\GitHubUserListApi.csproj", "{BEFC78DB-F586-474D-B701-5D22555E3CD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GitHubUserListApi", "GitHubUserListApi\GitHubUserListApi.csproj", "{BEFC78DB-F586-474D-B701-5D22555E3CD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GithubUserListApi.Test", "GithubUserListApi.Test\GithubUserListApi.Test.csproj", "{DA572080-92BE-45F0-9C5C-8EFE9B8A663D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{BEFC78DB-F586-474D-B701-5D22555E3CD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEFC78DB-F586-474D-B701-5D22555E3CD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEFC78DB-F586-474D-B701-5D22555E3CD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA572080-92BE-45F0-9C5C-8EFE9B8A663D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA572080-92BE-45F0-9C5C-8EFE9B8A663D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA572080-92BE-45F0-9C5C-8EFE9B8A663D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA572080-92BE-45F0-9C5C-8EFE9B8A663D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

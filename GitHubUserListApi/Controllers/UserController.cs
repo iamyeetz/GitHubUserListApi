@@ -24,7 +24,7 @@ namespace GitHubUserListApi.Controllers
 
         [HttpGet]
         [Route("GetUsers")]
-        public async Task<IActionResult> getGithubUsers([FromBody] List<Users> users)
+        public async Task<IActionResult> GetGithubUsers([FromBody] List<Users> users)
         {
 
             if(users.Count > 10)
@@ -33,34 +33,10 @@ namespace GitHubUserListApi.Controllers
             }
 
             UserInfoRequestResponse userInfoRequestResponse = new UserInfoRequestResponse();
+            var data = await _ghUserSearchService.GetUserFromGithubAsync(users);          
+            userInfoRequestResponse.UserInformation = data.UserInformation.OrderBy(x => x.name).ToList(); 
+            userInfoRequestResponse.userDoesntExists = data.userDoesntExists.OrderBy(x => x.username).ToList();
 
-
-
-            foreach (var user in users)
-            {
-                try
-                {
-                    var data = await _ghUserSearchService.GetUserFromGithubAsync(user);
-                    if(data.id != null)
-                    {
-                        userInfoRequestResponse.UserInformation.Add(data);
-                    }
-                    else
-                    {
-                        userInfoRequestResponse.userDoesntExists.Add(user);
-                    }
-               
-             
-              
-                }
-                catch (Exception ex)
-                {
-
-                  
-                }
-        
-            }
-            userInfoRequestResponse.UserInformation = userInfoRequestResponse.UserInformation.OrderBy(x => x.name).ToList(); ;
             return new JsonResult(userInfoRequestResponse);
         }
 
