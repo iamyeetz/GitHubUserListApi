@@ -29,7 +29,7 @@ namespace GitHubUserListApi.Controllers
 
             if(users.Count > 10)
             {
-                return new JsonResult(new ArgumentOutOfRangeException());
+                return new JsonResult(new ArgumentOutOfRangeException("Requested usernames should be less than 10"));
             }
 
             UserInfoRequestResponse userInfoRequestResponse = new UserInfoRequestResponse();
